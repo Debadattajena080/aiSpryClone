@@ -60,6 +60,7 @@ const MultiRowCarousel = () => {
                   src={card.image}
                   alt={card.heading}
                   className="w-32 h-32 object-cover rounded-full"
+                  loading="lazy"
                 />
                 <h3 className="text-lg  text-gray-800 mt-4 text-start">
                   {card.heading}

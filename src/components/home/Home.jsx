@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import CarouselComponent from "./Carousel";
 
 import homebanner from "../../assets/homebanner.webp";
@@ -7,8 +8,12 @@ import mission from "../../assets/mission.png";
 import vision from "../../assets/vision.png";
 import digital from "../../assets/digital.webp";
 
+
 import { scrollToTop } from "../utility/ScrolToTop";
+
+
 import MultiCarousel from "./MulitCarousel";
+import AiTutorPhase from "./AiTutorPhase";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,6 +33,9 @@ const Home = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+
+
   return (
     <>
       <div className="relative container ">
@@ -167,6 +175,12 @@ const Home = () => {
           <MultiCarousel />
         </div>
       </div>
+
+      <section className="bg-gray-50">
+       
+        <AiTutorPhase />
+       
+      </section>
 
       <button
         onClick={scrollToTop}
