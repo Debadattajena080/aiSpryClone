@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import CarouselComponent from "./Carousel";
 
-
-
 import homebanner from "../../assets/homebanner.webp";
 import aiImage from "../../assets/aiImage.webp";
 import mission from "../../assets/mission.png";
 import vision from "../../assets/vision.png";
+import digital from "../../assets/digital.webp";
+
 import { scrollToTop } from "../utility/ScrolToTop";
+import MultiCarousel from "./MulitCarousel";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,13 +21,6 @@ const Home = () => {
     }
   };
 
-  // const scrollToTop = () => {
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: "smooth",
-  //   });
-  // };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
@@ -37,14 +31,14 @@ const Home = () => {
   return (
     <>
       <div className="relative container ">
-        {/* Image */}
+        {/* banner section */}
         <img
           src={homebanner}
           alt="homebanner"
           className="h-auto w-full object-cover"
+          lazy="true"
         />
 
-        {/* Text Content */}
         <div className="absolute mt-5 md:mt-0 top-1/2 w-3/4  left-6 md:left-10 transform -translate-y-1/2 text-white md:ml-40 flex flex-col text-left">
           <h1 className="text-2xl md:text-5xl font-semibold">
             Unleashing the Future with AI
@@ -139,14 +133,40 @@ const Home = () => {
 
       <section className="mt-16">
         <div>
-          <h1 className="text-2xl md:text-2xl text-red-500 font-semibold">Leading AI Transformation Across Verticals</h1>
-          <p className="text-gray-600 py-4">
+          <h1 className="text-2xl md:text-2xl text-red-500 font-semibold">
+            Leading AI Transformation Across Verticals
+          </h1>
+          <p className="text-gray-600 py-4 text-start md:text-center mx-4">
             From the intricacies of healthcare to the nuances of finance, our AI
             solutions cater to diverse industries.
           </p>
         </div>
         <CarouselComponent />
       </section>
+
+      <section className="mt-16 ">
+        <div>
+          <h1 className="text-2xl md:text-2xl text-red-500 font-semibold">
+            Pushing Digital Boundaries
+          </h1>
+          <p className="text-gray-600 py-4 md:w-1/3 mx-auto">
+            Beyond borders, beyond conventions; we redefine the digital horizon.
+            Melding traditional wisdom with modern technology, we lead the AI
+            evolution.
+          </p>
+        </div>
+      </section>
+      <div className="flex w-4/5 mx-auto  mt-8 flex-wrap">
+        <img
+          src={digital}
+          alt="DigitalImage"
+          className="w-auto object-contain h-96 m-auto shadow-md"
+        />
+
+        <div className="w-1/2">
+          <MultiCarousel />
+        </div>
+      </div>
 
       <button
         onClick={scrollToTop}

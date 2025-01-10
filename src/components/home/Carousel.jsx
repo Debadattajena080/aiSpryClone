@@ -32,20 +32,19 @@ const CarouselComponent = () => {
         autoPlaySpeed={3000}
         showDots={true}
         arrows={false}
-        // centerMode={true} 
         itemClass="carousel-item-padding" 
       >
         {carouselData.map((card) => (
           <div
             key={card.id}
-            className="carousel-card px-4 py-8 bg-white border-2 mx-4 mb-12  h-80  flex flex-col items-center "
+            className="carousel-card px-4 py-8 bg-white border-2 mx-4 mb-12  h-80 flex flex-col items-center "
           >
             <img
               src={card.image}
               alt={card.heading}
               className="card-image w-16 h-auto object-cover rounded-t-lg"
             />
-            <div className="p-4 h-48 overflow-hidden flex flex-col justify-between">
+            <div className="p-2 mt-4 h-40 overflow-hidden flex flex-col justify-between">
               <h3 className="card-heading text-xl font-semibold text-gray-800 mb-2">
                 {card.heading}
               </h3>
