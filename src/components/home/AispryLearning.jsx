@@ -64,12 +64,12 @@ const AispryLearning = () => {
           </div>
         </div>
 
-        {/* Image Section */}
         <div className="flex-1">
           <img
             src={custom}
             alt="Customizable Solutions"
             className="w-full rounded-md shadow-lg"
+            loading="lazy`"
           />
         </div>
       </div>

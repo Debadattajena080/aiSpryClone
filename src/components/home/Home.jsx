@@ -14,6 +14,7 @@ import MultiCarousel from "./MulitCarousel";
 import AiTutorPhase from "./AiTutorPhase";
 import AiTutorCharter from "./AiTutorCharter";
 import AispryLearning from "./AispryLearning";
+import Awards from "./Awards";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -184,7 +185,9 @@ const Home = () => {
       <section className="my-10">
         <AispryLearning />
       </section>
-
+      <section className="my-10">
+        <Awards />
+      </section>
       <button
         onClick={scrollToTop}
         className={`fixed bottom-10 right-10 bg-blue-500 text-white p-3 rounded-full shadow-lg transition-all ${
