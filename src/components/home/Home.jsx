@@ -15,6 +15,7 @@ import AiTutorPhase from "./AiTutorPhase";
 import AiTutorCharter from "./AiTutorCharter";
 import AispryLearning from "./AispryLearning";
 import Awards from "./Awards";
+import DemoForm from "./DemoForm";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -184,6 +185,9 @@ const Home = () => {
       </section>
       <section className="my-10">
         <AispryLearning />
+      </section>
+      <section>
+        <DemoForm />
       </section>
       <section className="my-10">
         <Awards />
