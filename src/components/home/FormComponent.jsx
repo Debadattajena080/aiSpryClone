@@ -28,18 +28,38 @@ const FormComponent = ({ closeForm }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { name, email, phone, subject } = formData;
-    if (!name || !email || !phone || !subject) {
+    const { name, lastName, email, phone, subject } = formData;
+
+    if (!name || !email || !phone || !subject || !lastName) {
       alert("Please fill in all required fields.");
       return;
     }
 
-    console.log("Form Data Submitted:", formData);
-    resetForm();
-    closeForm(); // Close the form after submission
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/saveUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, phone, subject, lastName }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Form submitted successfully!");
+        resetForm();
+        closeForm();
+      } else {
+        alert(`Error: ${data.error || "Something went wrong!"}`);
+      }
+    } catch (error) {
+      alert("Error connecting to the server.");
+      console.error(error);
+    }
   };
 
   return (

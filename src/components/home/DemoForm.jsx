@@ -17,7 +17,7 @@ const DemoForm = () => {
         <div
           className={`transition-all duration-400 ${showForm ? "pb-8" : ""}`}
         >
-          <div className="px-8 pt-8">
+          <div className="px-8 pt-8 text-center">
             <p className="text-white text-lg">
               Looking for a platform to manage and amplify the benefits of
               AiTutor?
