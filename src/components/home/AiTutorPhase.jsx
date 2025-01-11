@@ -19,10 +19,10 @@ const AiTutorPhase = () => {
           </p>
         </div>
         <div className="mt-10">
-          <h3 className="text-3xl font-semibold text-red-500 mb-2">
+          <h3 className="text-3xl font-semibold text-red-500 mb-2 text-center ">
             Intuitive Learning with AiTutor
           </h3>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-700 leading-relaxed text-center">
             Manually gauging a student's grasp or a tutor's effectiveness can be
             overwhelmingly complex. Enter AiTutor: our advanced solution
             designed to make the educational process more insightful,
@@ -30,7 +30,7 @@ const AiTutorPhase = () => {
           </p>
         </div>
         <div className="mt-12">
-          <h4 className="text-lg text-red-500">
+          <h4 className="text-lg text-red-500 text-center">
             <span className="font-semibold">For the student: </span>
             <span>A Tailored Learning Experience</span>
           </h4>

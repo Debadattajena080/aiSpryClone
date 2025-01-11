@@ -141,7 +141,7 @@ const Home = () => {
 
       <section className="mt-16">
         <div>
-          <h1 className="text-2xl md:text-2xl text-red-500 font-semibold">
+          <h1 className="text-2xl md:text-2xl text-red-500 font-semibold text-center">
             Leading AI Transformation Across Verticals
           </h1>
           <p className="text-gray-600 py-4 text-start md:text-center mx-4">
@@ -154,7 +154,7 @@ const Home = () => {
 
       <section className="mt-16 ">
         <div>
-          <h1 className="text-2xl md:text-2xl text-red-500 font-semibold">
+          <h1 className="text-2xl md:text-2xl text-red-500 font-semibold text-center">
             Pushing Digital Boundaries
           </h1>
           <p className="text-gray-600 py-4 md:w-1/3 mx-auto">
