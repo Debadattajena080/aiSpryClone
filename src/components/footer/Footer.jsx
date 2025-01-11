@@ -1,4 +1,5 @@
 import React from "react";
+import CopyRigthFooter from "./CopyRigthFooter";
 import footerLogo from "../../assets/footerlogo.webp";
 import {
   FaFacebookF,
@@ -55,10 +56,7 @@ const Footer = () => {
           </h4>
         </div>
       </div>
-
-      <div className="py-4 text-center text-gray-500 text-sm bg-slate-200">
-        © {new Date().getFullYear()} AiSPRY. All rights reserved.
-      </div>
+      <CopyRigthFooter />
     </footer>
   );
 };

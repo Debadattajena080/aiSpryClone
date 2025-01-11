@@ -11,9 +11,9 @@ const DemoForm = () => {
   };
 
   return (
-    <div className="relative flex flex-col md:flex-row md:justify-center gap-4 md:ml-20">
+    <div className="relative flex flex-col md:flex-row md:justify-center gap-4 md:ml-28">
       {/* Gradient Section */}
-      <div className="relative bg-gradient-to-r from-[#e28743] to-blue-500 py-8 md:w-[70%] overflow-hidden rounded-lg ">
+      <div className="relative bg-gradient-to-r from-[#e28743] to-blue-500 py-8 md:w-[75%]  ">
         <div
           className={`transition-all duration-400 ${showForm ? "pb-8" : ""}`}
         >

@@ -28,10 +28,9 @@ const Navbar = () => {
   return (
     <nav className="bg-gradient-to-r from-[#e28743] to-blue-500 px-6 py-8">
       <div className="md:w-3/4 container md:mx-auto flex justify-between items-center">
-        <div className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img src={logo} alt="logo" className="h-14 w-auto" />
-        </div>
-
+        </Link>
         <button
           className="text-white md:hidden focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
