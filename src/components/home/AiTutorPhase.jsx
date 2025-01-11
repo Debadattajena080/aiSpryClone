@@ -1,39 +1,8 @@
 import React from "react";
-import { Accordion, AccordionItem as Item } from "@szhsin/react-accordion";
-import { FaAngleDown } from "react-icons/fa";
-import { accordianData } from "../utility/AccordianData";
-import realtime from "../../assets/realtime.gif";
+
+import AccordionWithImage from "../accordian/AccordianWIthImage";
 
 const AiTutorPhase = () => {
-  const AccordionItem = ({ header, ...rest }) => (
-    <Item
-      {...rest}
-      header={({ state: { isEnter } }) => (
-        <div
-          className={`flex items-center w-full text-md font-semibold transition-colors duration-200 ease-out bg-white p-4  ${
-            isEnter ? "text-red-500" : "text-gray-800"
-          }`}
-        >
-          {header}
-          <FaAngleDown
-            className={`ml-auto transition-transform duration-200 ease-out ${
-              isEnter && "rotate-180"
-            }`}
-          />
-        </div>
-      )}
-      className="mb-4 shadow-md"
-      buttonProps={{
-        className: ({ isEnter }) =>
-          `flex w-full text-left hover:bg-slate-100 ${
-            isEnter && "bg-slate-200"
-          }`,
-      }}
-      contentProps={{
-        className: "text-gray-600 ease-out text-start bg-white p-4",
-      }}
-    />
-  );
   return (
     <div className=" mx-auto p-6 bg-gray-50 mt-4 ">
       <div className="container mx-auto w-3/4">
@@ -68,23 +37,7 @@ const AiTutorPhase = () => {
         </div>
 
         <div className="mt-10 flex items-start gap-6">
-          <div className="w-full lg:w-1/2">
-            <Accordion>
-              {accordianData.map(({ header, content }, i) => (
-                <AccordionItem header={header} key={i}>
-                  {content}
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-          <div className="w-full lg:w-1/2 bg-white p-2 md:mt-10">
-            <img
-              src={realtime}
-              alt="Descriptive text"
-              loading="lazy"
-              className="w-full h-auto rounded-lg shadow-lg"
-            />
-          </div>
+          <AccordionWithImage />
         </div>
       </div>
     </div>

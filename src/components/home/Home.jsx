@@ -176,10 +176,8 @@ const Home = () => {
         </div>
       </div>
 
-      <section className="bg-gray-50">
-       
+      <section className="bg-gray-50"> 
         <AiTutorPhase />
-       
       </section>
 
       <button
