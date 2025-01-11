@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import logo from "../../assets/logo.png";
 
 const Navbar = () => {
@@ -9,7 +10,6 @@ const Navbar = () => {
     // Check if the user has scrolled more than 50px
     if (window.scrollY > 100) {
       setHasScrolled(true);
-      console.log("Scrolled");
     } else {
       setHasScrolled(false);
     }
@@ -39,15 +39,15 @@ const Navbar = () => {
           {isOpen ? "✖" : "☰"}
         </button>
 
-        <ul className="hidden md:flex space-x-8 text-white text-lg ">
+        <ul className="hidden md:flex space-x-8 text-white text-lg">
           <li className="hover:text-gray-200 transition duration-300">
-            <a href="#explore">Explore AiTutor</a>
+            <Link to="/explore">Explore AiTutor</Link>
           </li>
           <li className="hover:text-gray-200 transition duration-300">
-            <a href="#innovations">See our Innovations</a>
+            <Link to="/innovations">See our Innovations</Link>
           </li>
           <li className="hover:text-gray-200 transition duration-300">
-            <a href="#training">Embark our Training</a>
+            <Link to="/training">Embark our Training</Link>
           </li>
         </ul>
       </div>
@@ -55,16 +55,16 @@ const Navbar = () => {
       <ul
         className={`${
           isOpen ? "block" : "hidden"
-        }  md:hidden mt-2  space-y-4 px-6 py-4 text-white text-lg font-semibold`}
+        } md:hidden mt-2 space-y-4 px-6 py-4 text-white text-lg font-semibold`}
       >
         <li className="hover:text-blue-500 transition duration-300">
-          <a href="#explore">Explore AiTutor</a>
+          <Link to="/explore">Explore AiTutor</Link>
         </li>
         <li className="hover:text-blue-500 transition duration-300">
-          <a href="#innovations">See our Innovations</a>
+          <Link to="/innovations">See our Innovations</Link>
         </li>
         <li className="hover:text-blue-500 transition duration-300">
-          <a href="#training">Embark our Training</a>
+          <Link to="/training">Embark our Training</Link>
         </li>
       </ul>
     </nav>
