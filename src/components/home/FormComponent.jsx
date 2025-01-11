@@ -43,12 +43,13 @@ const FormComponent = ({ closeForm }) => {
     await axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/saveUser`, formData)
       .then((response) => {
-        toast.success( response?.messageF);
+        toast.success(response?.data?.message);
         resetForm();
         closeForm();
       })
       .catch((error) => {
-        toast.error("error happens", error);
+        toast.error("Something went wrong");
+        console.log(error);
       });
   };
 
