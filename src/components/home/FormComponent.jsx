@@ -46,10 +46,12 @@ const FormComponent = ({ closeForm }) => {
         toast.success(response?.data?.message);
         resetForm();
         closeForm();
+        console.log(response?.data)
       })
       .catch((error) => {
-        toast.error("Something went wrong");
-        console.log(error);
+        toast.error(error?.response?.data?.error);
+        console.log(error?.response?.data?.error);
+
       });
   };
 

@@ -5,7 +5,7 @@ const AispryLearning = () => {
   return (
     <div className="p-8 w-[90%] lg:w-[75%] mx-auto">
       {/* Heading */}
-      <h3 className="text-2xl lg:text-3xl text-center mb-6 text-red-500">
+      <h3 className="text-xl  text-center mb-2 text-red-500">
         Elevate the Learning Experience. Dive into AiTutor's Phase 3 Innovations{" "}
         <span className="text-blue-500 underline hover:text-blue-700 transition cursor-pointer">
           Today!
