@@ -12,7 +12,7 @@ const AccordionWithImage = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col lg:flex-row gap-6">
+    <div className="mt-4 flex flex-col lg:flex-row gap-6">
       {/* Accordion Section */}
       <div className="w-full lg:w-1/2">
         {accordianData.map(({ header, content, image }, i) => (

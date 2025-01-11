@@ -13,6 +13,7 @@ import { scrollToTop } from "../utility/ScrolToTop";
 import MultiCarousel from "./MulitCarousel";
 import AiTutorPhase from "./AiTutorPhase";
 import AiTutorCharter from "./AiTutorCharter";
+import AispryLearning from "./AispryLearning";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -179,6 +180,9 @@ const Home = () => {
 
       <section>
         <AiTutorCharter />
+      </section>
+      <section className="my-10">
+        <AispryLearning />
       </section>
 
       <button

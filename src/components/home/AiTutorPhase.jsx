@@ -36,7 +36,7 @@ const AiTutorPhase = () => {
           </h4>
         </div>
 
-        <div className="mt-10 flex items-start gap-6">
+        <div className="mt-4 flex items-start gap-6">
           <AccordionWithImage />
         </div>
       </div>
