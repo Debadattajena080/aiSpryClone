@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const FormComponent = ({ closeForm }) => {
   const [formData, setFormData] = useState({
@@ -34,32 +36,20 @@ const FormComponent = ({ closeForm }) => {
     const { name, lastName, email, phone, subject } = formData;
 
     if (!name || !email || !phone || !subject || !lastName) {
-      alert("Please fill in all required fields.");
+      toast.warning("Please fill in all required fields.");
       return;
     }
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/saveUser`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, phone, subject, lastName }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Form submitted successfully!");
+    await axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/saveUser`, formData)
+      .then((response) => {
+        toast.success( response?.messageF);
         resetForm();
         closeForm();
-      } else {
-        alert(`Error: ${data.error || "Something went wrong!"}`);
-      }
-    } catch (error) {
-      alert("Error connecting to the server.");
-      console.error(error);
-    }
+      })
+      .catch((error) => {
+        toast.error("error happens", error);
+      });
   };
 
   return (
