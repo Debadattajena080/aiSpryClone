@@ -44,7 +44,7 @@ const CarouselComponent = () => {
               alt={card.heading}
               className="card-image w-16 h-auto object-cover rounded-t-lg"
             />
-            <div className="p-2 mt-4 h-40 overflow-hidden flex flex-col justify-between">
+            <div className="p-2 mt-4 h-40 overflow-hidden flex flex-col justify-between text-center">
               <h3 className="card-heading text-xl font-semibold text-gray-800 mb-2">
                 {card.heading}
               </h3>
