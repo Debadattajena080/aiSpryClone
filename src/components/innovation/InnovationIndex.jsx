@@ -4,6 +4,7 @@ import Achievements from "./Achievements";
 import ConnectWithUs from "./ConnectWithUs";
 import DemoForm from "../home/DemoForm";
 import { scrollToTop } from "../utility/ScrolToTop";
+import ProjectList from "./ProjectList";
 
 const InnovationIndex = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,6 +27,7 @@ const InnovationIndex = () => {
   return (
     <div className="">
       <BannerSection />
+      <ProjectList />
       <Achievements />
       <ConnectWithUs />
       <DemoForm />
