@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
+import ProjectDetailsCard from "./ProjectDetailsCard"; // Import the new component
 
 const ProjectList = () => {
   const [industries, setIndustries] = useState([]);
@@ -10,6 +11,7 @@ const ProjectList = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
     // Fetch industries
@@ -24,8 +26,6 @@ const ProjectList = () => {
           const firstIndustryId = response.data[0]._id;
           setSelectedIndustry(firstIndustryId);
           fetchProjects(firstIndustryId);
-
-          // Set initial URL with selected industry
           setSearchParams({ industry: response.data[0].industryName });
         }
       } catch (error) {
@@ -37,39 +37,38 @@ const ProjectList = () => {
   }, []);
 
   const fetchProjects = async (industryId) => {
+    setLoading(true); // Start loading
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/api/projects/${industryId}`
       );
       setProjects(response.data);
 
-      // Set the first project as selected by default
       if (response.data.length > 0) {
-        setSelectedProject(response.data[0]._id); // Save project ID
+        setSelectedProject(response.data[0]._id);
         setSearchParams({
           industry: searchParams.get("industry"),
           project: response.data[0].projectName,
         });
       } else {
-        setSelectedProject(null); // No project available for this industry
+        setSelectedProject(null);
       }
     } catch (error) {
       console.error("Error fetching projects:", error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   const handleIndustryChange = (industry) => {
     setSelectedIndustry(industry._id);
     fetchProjects(industry._id);
-
-    // Update URL with selected industry
     setSearchParams({ industry: industry.industryName });
   };
 
   const handleProjectChange = (projectId) => {
     setSelectedProject(projectId);
 
-    // Update URL with selected project
     const industryName = searchParams.get("industry");
     const projectName = projects.find(
       (project) => project._id === projectId
@@ -77,24 +76,27 @@ const ProjectList = () => {
     setSearchParams({ industry: industryName, project: projectName });
   };
 
+  const selectedProjectData = projects.find(
+    (project) => project._id === selectedProject
+  );
+
   return (
     <div className="bg-gray-100 ">
-      <h3 className="text-3xl font-semibold text-red-500 text-center pt-12">
+      <h3 className="text-3xl font-semibold text-red-500 text-center pt-12 ml-28">
         Spotlight Projects & Innovations
       </h3>
       <div className="md:w-[75%] mx-auto  flex">
         {/* Sidebar */}
-        <div className="md:w-[35%] bg-white p-4 my-8 items-start mt-8">
+        <div className="md:w-[35%] bg-white p-4 my-8 items-start mt-8 h-[30%]">
           <div>
             <button
-              className="text-lg font-bold bg-orange-600 px-4 py-2 rounded w-full text-left"
+              className="text-lg font-semibold bg-orange-600 px-4 py-2 rounded w-full text-left text-white"
               onClick={() => setIsCollapsed(!isCollapsed)}
             >
               Industries
               <span className="float-right">{isCollapsed ? "+" : "-"}</span>
             </button>
 
-            {/* Industry List */}
             {!isCollapsed && (
               <div className="mt-4">
                 {industries.map((industry) => (
@@ -108,7 +110,7 @@ const ProjectList = () => {
                         <FaCheck className="text-red-500 text-sm" />
                       )}
                     </div>
-                    <label className="ml-4 text-lg font-medium">
+                    <label className="ml-4 text-lg ">
                       {industry.industryName}
                     </label>
                   </div>
@@ -118,10 +120,20 @@ const ProjectList = () => {
           </div>
 
           <div className="mt-8">
-            <h4 className="text-lg font-bold bg-orange-600 px-4 py-2 rounded w-full text-left">
+            <h4 className="text-lg font-semibold bg-orange-600 px-4 py-2 rounded w-full text-left text-white">
               Projects
             </h4>
-            {projects.length > 0 ? (
+            {loading ? ( // Show loading indicator
+              <>
+                <div className="flex justify-center items-center h-full mt-4">
+                  <div className="w-6 h-6 border-4 border-dashed border-orange-600 rounded-full animate-spin "></div>
+                </div>
+
+                <p className="text-center text-gray-500 mt-4">
+                  Loading projects...
+                </p>
+              </>
+            ) : projects.length > 0 ? (
               <div className="mt-4">
                 {projects.map((project) => (
                   <div
@@ -134,7 +146,7 @@ const ProjectList = () => {
                         <FaCheck className="text-red-500 text-sm" />
                       )}
                     </div>
-                    <label className="ml-4 text-lg font-medium">
+                    <label className="ml-4 text-lg ">
                       {project.projectName}
                     </label>
                   </div>
@@ -146,23 +158,9 @@ const ProjectList = () => {
           </div>
         </div>
 
-        {/* Project Details */}
         <div className="md:w-[65%] bg-white p-4 my-8 ml-4 rounded shadow">
           {selectedProject ? (
-            <div>
-              <h3 className="text-2xl font-semibold">
-                {
-                  projects.find((project) => project._id === selectedProject)
-                    ?.projectName
-                }
-              </h3>
-              <p className="mt-4">
-                {
-                  projects.find((project) => project._id === selectedProject)
-                    ?.description
-                }
-              </p>
-            </div>
+            <ProjectDetailsCard project={selectedProjectData} />
           ) : (
             <p className="text-gray-500">
               Select a project to see the details.
