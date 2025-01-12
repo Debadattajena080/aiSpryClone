@@ -16,40 +16,38 @@ code {
     monospace;
 }
 
-/* .circle {
+.custom-bg {
   position: relative;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: expandCircle 3s infinite ease-out;
 }
 
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.wave-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20%;
+  height: 20%;
+  background: rgba(138, 217, 248, 0.1);
   border-radius: 50%;
-  position: absolute; 
+  animation: wave 3s ease-in-out infinite;
+  transform: translate(-50%, -50%);
 }
 
-@keyframes expandCircle {
+@keyframes wave {
   0% {
-    transform: scale(0);
-    top: 50%;
-    left: 50%;
+    width: 20%;
+    height: 20%;
+    background: rgba(138, 217, 248, 0.1);
   }
   50% {
-    transform: scale(1.5);
-    top: 50%;
-    left: 50%;
+    width: 110%;
+    height: 110%;
+    background: rgba(138, 217, 248, 0.05); 
   }
   100% {
-    transform: scale(4);
-    top: -10%;
-    left: -10%;
+    width: 200%;
+    height: 200%;
+    background: rgba(138, 217, 248, 0);
   }
-} */
+}
+

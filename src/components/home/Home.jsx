@@ -96,12 +96,13 @@ const Home = () => {
           </section>
 
           {/* Image */}
-          <div class="circle bg-blue-200 opacity-40 ">
+          <div className="relative rounded-full custom-bg">
+            <div className="wave-effect"></div>
             <div className="">
               <img
                 src={aiImage}
                 alt="ai-image"
-                className="w-full h-auto  object-cover"
+                className="w-full h-full object-cover rounded-full"
               />
             </div>
           </div>
