@@ -25,7 +25,7 @@ const InnovationIndex = () => {
     };
   }, []);
   return (
-    <div className="">
+    <div className="mb-12">
       <BannerSection />
       <ProjectList />
       <Achievements />

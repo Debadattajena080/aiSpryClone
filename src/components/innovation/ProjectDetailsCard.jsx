@@ -9,6 +9,7 @@ const ProjectDetailsCard = ({ project }) => {
   };
 
   return (
+    <div className="md:w-[65%] bg-white p-4 my-8 ml-4 rounded shadow">
     <div className="bg-white p-4">
       <h3 className="text-xl font-semibold text-red-500">
         {project?.projectName}
@@ -101,6 +102,7 @@ const ProjectDetailsCard = ({ project }) => {
       >
         {showMore ? "Show Less <" : "Show More >"}
       </button>
+    </div>
     </div>
   );
 };

@@ -11,11 +11,13 @@ const ProjectList = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [loading, setLoading] = useState(false); // Loading state
+  const [industryLoading, setIndustryLoading] = useState(false); // Industry loading state
+  const [projectLoading, setProjectLoading] = useState(false); // Project loading state
 
   useEffect(() => {
     // Fetch industries
     const fetchIndustries = async () => {
+      setIndustryLoading(true); // Start industry loading
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/api/industries`
@@ -25,11 +27,13 @@ const ProjectList = () => {
         if (response.data.length > 0) {
           const firstIndustryId = response.data[0]._id;
           setSelectedIndustry(firstIndustryId);
-          fetchProjects(firstIndustryId);
+          fetchProjects(firstIndustryId); // Fetch projects for the first industry
           setSearchParams({ industry: response.data[0].industryName });
         }
       } catch (error) {
         console.error("Error fetching industries:", error);
+      } finally {
+        setIndustryLoading(false); // Stop industry loading
       }
     };
 
@@ -37,7 +41,7 @@ const ProjectList = () => {
   }, []);
 
   const fetchProjects = async (industryId) => {
-    setLoading(true); // Start loading
+    setProjectLoading(true); // Start project loading
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/api/projects/${industryId}`
@@ -56,7 +60,7 @@ const ProjectList = () => {
     } catch (error) {
       console.error("Error fetching projects:", error);
     } finally {
-      setLoading(false); // Stop loading
+      setProjectLoading(false); // Stop project loading
     }
   };
 
@@ -85,7 +89,7 @@ const ProjectList = () => {
       <h3 className="text-3xl font-semibold text-red-500 text-center pt-12 ml-28">
         Spotlight Projects & Innovations
       </h3>
-      <div className="md:w-[75%] mx-auto  flex">
+      <div className="md:w-[75%] mx-auto flex">
         {/* Sidebar */}
         <div className="md:w-[35%] bg-white p-4 my-8 items-start mt-8 h-[30%]">
           <div>
@@ -99,22 +103,33 @@ const ProjectList = () => {
 
             {!isCollapsed && (
               <div className="mt-4">
-                {industries.map((industry) => (
-                  <div
-                    key={industry._id}
-                    className="flex items-center mb-4 cursor-pointer"
-                    onClick={() => handleIndustryChange(industry)}
-                  >
-                    <div className="w-6 h-6 flex items-center justify-center border-2">
-                      {selectedIndustry === industry._id && (
-                        <FaCheck className="text-red-500 text-sm" />
-                      )}
+                {industryLoading ? (
+                  <>
+                    <div className="flex justify-center items-center h-full">
+                      <div className="w-6 h-6 border-4 border-dashed border-orange-600 rounded-full animate-spin"></div>
                     </div>
-                    <label className="ml-4 text-lg ">
-                      {industry.industryName}
-                    </label>
-                  </div>
-                ))}
+                    <p className="text-center text-gray-500 mt-4">
+                      Loading industries...
+                    </p>
+                  </>
+                ) : (
+                  industries.map((industry) => (
+                    <div
+                      key={industry._id}
+                      className="flex items-center mb-4 cursor-pointer"
+                      onClick={() => handleIndustryChange(industry)}
+                    >
+                      <div className="w-6 h-6 flex items-center justify-center border-2">
+                        {selectedIndustry === industry._id && (
+                          <FaCheck className="text-red-500 text-sm" />
+                        )}
+                      </div>
+                      <label className="ml-4 text-lg ">
+                        {industry.industryName}
+                      </label>
+                    </div>
+                  ))
+                )}
               </div>
             )}
           </div>
@@ -123,50 +138,44 @@ const ProjectList = () => {
             <h4 className="text-lg font-semibold bg-orange-600 px-4 py-2 rounded w-full text-left text-white">
               Projects
             </h4>
-            {loading ? ( // Show loading indicator
+            {projectLoading ? (
               <>
                 <div className="flex justify-center items-center h-full mt-4">
-                  <div className="w-6 h-6 border-4 border-dashed border-orange-600 rounded-full animate-spin "></div>
+                  <div className="w-6 h-6 border-4 border-dashed border-orange-600 rounded-full animate-spin"></div>
                 </div>
-
                 <p className="text-center text-gray-500 mt-4">
                   Loading projects...
                 </p>
               </>
-            ) : projects.length > 0 ? (
-              <div className="mt-4">
-                {projects.map((project) => (
-                  <div
-                    key={project._id}
-                    className="flex items-center mb-4 cursor-pointer"
-                    onClick={() => handleProjectChange(project._id)}
-                  >
-                    <div className="w-6 h-6 flex items-center justify-center border-2">
-                      {selectedProject === project._id && (
-                        <FaCheck className="text-red-500 text-sm" />
-                      )}
-                    </div>
-                    <label className="ml-4 text-lg ">
-                      {project.projectName}
-                    </label>
-                  </div>
-                ))}
-              </div>
             ) : (
-              <p>No projects available for this industry.</p>
+              projects.length > 0 && (
+                <div className="mt-4">
+                  {projects.map((project) => (
+                    <div
+                      key={project._id}
+                      className="flex items-center mb-4 cursor-pointer"
+                      onClick={() => handleProjectChange(project._id)}
+                    >
+                      <div className="w-6 h-6 flex items-center justify-center border-2">
+                        {selectedProject === project._id && (
+                          <FaCheck className="text-red-500 text-sm" />
+                        )}
+                      </div>
+                      <label className="ml-4 text-lg ">
+                        {project.projectName}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )
             )}
           </div>
         </div>
 
-        <div className="md:w-[65%] bg-white p-4 my-8 ml-4 rounded shadow">
-          {selectedProject ? (
-            <ProjectDetailsCard project={selectedProjectData} />
-          ) : (
-            <p className="text-gray-500">
-              Select a project to see the details.
-            </p>
-          )}
-        </div>
+        {/* Show the ProjectDetailsCard only if both industries and projects are loaded */}
+        {!industryLoading && !projectLoading && selectedProject && (
+          <ProjectDetailsCard project={selectedProjectData} />
+        )}
       </div>
     </div>
   );
