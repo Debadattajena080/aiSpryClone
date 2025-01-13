@@ -12,6 +12,8 @@ const FormComponent = ({ closeForm }) => {
     subject: "",
   });
 
+  const [loading, setLoading] = useState(false); // New loading state
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -40,19 +42,21 @@ const FormComponent = ({ closeForm }) => {
       return;
     }
 
-    await axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/saveUser`, formData)
-      .then((response) => {
-        toast.success(response?.data?.message);
-        resetForm();
-        closeForm();
-        console.log(response?.data)
-      })
-      .catch((error) => {
-        toast.error(error?.response?.data?.error);
-        console.log(error?.response?.data?.error);
+    setLoading(true); // Set loading to true when form is being submitted
 
-      });
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/saveUser`,
+        formData
+      );
+      toast.success(response?.data?.message);
+      resetForm();
+      closeForm();
+    } catch (error) {
+      toast.error(error?.response?.data?.error || "An error occurred");
+    } finally {
+      setLoading(false); // Set loading to false after submission is complete
+    }
   };
 
   return (
@@ -131,9 +135,12 @@ const FormComponent = ({ closeForm }) => {
         <div className="flex justify-center mt-14">
           <button
             type="submit"
-            className="bg-orange-400 text-white font-bold py-3 px-10 rounded"
+            disabled={loading}
+            className={`w-[150px] ${
+              loading ? "cursor-not-allowed" : "bg-orange-400"
+            } text-white font-bold py-3 rounded`}
           >
-            Submit
+            {loading ? "Submitting..." : "Submit"}
           </button>
         </div>
       </form>

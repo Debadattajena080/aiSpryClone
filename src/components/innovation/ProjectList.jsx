@@ -172,7 +172,7 @@ const ProjectList = () => {
           </div>
         </div>
 
-        {/* Show the ProjectDetailsCard only if both industries and projects are loaded */}
+        
         {!industryLoading && !projectLoading && selectedProject && (
           <ProjectDetailsCard project={selectedProjectData} />
         )}
