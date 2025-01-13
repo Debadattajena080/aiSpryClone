@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import equest from "../../assets/equest.png";
 import { aiTutorCharterData } from "../utility/AiTutorCharterData";
+
 const AiTutorCharter = () => {
   const topics = [
     {
@@ -20,11 +21,77 @@ const AiTutorCharter = () => {
     { label: "Collaborative Growth", position: { right: "-15%", top: "80%" } },
   ];
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0); // Default to the first topic
+  const [showDetails, setShowDetails] = useState(true);
+  const [polylinePoints, setPolylinePoints] = useState("");
+  const topicRefs = useRef([]);
+  const detailsBoxRef = useRef(null);
+  // const arrowOffset = 15; // Offset value to create space between the arrow and the topic's vertical center
+  const arrowHorizontalOffset = -90; // Horizontal offset for arrow end point
 
   const handleClick = (index) => {
-    setActiveIndex(index);
+    if (index === activeIndex) {
+      // Toggle details and line visibility
+      setShowDetails(!showDetails);
+    } else {
+      // Change the selected topic
+      setActiveIndex(index);
+      setShowDetails(true);
+    }
   };
+
+  useEffect(() => {
+    if (
+      activeIndex !== null &&
+      topicRefs.current[activeIndex] &&
+      detailsBoxRef.current &&
+      showDetails
+    ) {
+      const topicElement =
+        topicRefs.current[activeIndex].getBoundingClientRect();
+      const detailsBoxElement = detailsBoxRef.current.getBoundingClientRect();
+
+      // Calculate the vertical center of the details box
+      const boxCenterY = detailsBoxElement.top + detailsBoxElement.height / 2;
+
+      // Calculate the vertical center of the topic
+      const topicCenterY = topicElement.top + topicElement.height / 2;
+
+      // Set the horizontal alignment based on the position of the topic (left or right)
+      const boxStartX =
+        topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
+          ? detailsBoxElement.right // Start from the right vertical center
+          : detailsBoxElement.left; // Start from the left vertical center
+
+      // Calculate the points for the polyline (start at box center, move horizontally, then to topic center)
+      const points = [
+        `${boxStartX},${boxCenterY}`, // Start from the vertical center of the box
+        `${
+          boxStartX +
+          (topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
+            ? 50
+            : -50)
+        },${boxCenterY}`, // Move horizontally to adjust the alignment
+        `${
+          boxStartX +
+          (topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
+            ? 50
+            : -50)
+        },${topicCenterY}`, // Offset vertically for space
+        `${
+          topicElement.left +
+          topicElement.width / 2 +
+          (topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
+            ? -arrowHorizontalOffset
+            : arrowHorizontalOffset)
+        },${topicCenterY}`, // Add horizontal offset for space between the arrow and the topic
+      ].join(" ");
+
+      setPolylinePoints(points);
+    } else {
+      setPolylinePoints("");
+    }
+  }, [activeIndex, showDetails]);
 
   return (
     <div className="relative flex flex-col items-center justify-center my-10">
@@ -46,6 +113,7 @@ const AiTutorCharter = () => {
           return (
             <span
               key={index}
+              ref={(el) => (topicRefs.current[index] = el)}
               onClick={() => handleClick(index)}
               style={topic.position}
               className={`absolute h-12 flex flex-col items-center justify-center transition cursor-pointer text-center hover:text-red-500 ${
@@ -59,28 +127,60 @@ const AiTutorCharter = () => {
         })}
       </div>
 
-      <div className="mt-8 w-[50%] p-4 border rounded-md shadow-lg bg-white text-center">
-        {activeIndex !== null && aiTutorCharterData[activeIndex] ? (
-          <>
-            <div className="flex text-start  text-gray-600">
-              <p className="ml-2">
-                <span className="text-lg font-semibold">Objective: </span>
-                {aiTutorCharterData[activeIndex].objective ||
-                  "Objective not provided."}
-              </p>
-            </div>
-            <div className="flex text-start  text-gray-600 mt-4">
-              <p className="ml-2">
-                <span className="text-lg font-semibold">Approach:</span>
-                {aiTutorCharterData[activeIndex].approach ||
-                  "Approach not provided."}
-              </p>
-            </div>
-          </>
-        ) : (
-          <p>Click on a topic to see details</p>
-        )}
-      </div>
+      {showDetails && (
+        <div
+          ref={detailsBoxRef}
+          className="mt-8 w-[50%] p-4 border rounded-md shadow-lg bg-white text-center"
+        >
+          {aiTutorCharterData[activeIndex] ? (
+            <>
+              <div className="flex text-start text-gray-600">
+                <p className="ml-2">
+                  <span className="text-lg font-semibold">Objective: </span>
+                  {aiTutorCharterData[activeIndex].objective ||
+                    "Objective not provided."}
+                </p>
+              </div>
+              <div className="flex text-start text-gray-600 mt-4">
+                <p className="ml-2">
+                  <span className="text-lg font-semibold">Approach: </span>
+                  {aiTutorCharterData[activeIndex].approach ||
+                    "Approach not provided."}
+                </p>
+              </div>
+            </>
+          ) : (
+            <p>Click on a topic to see details</p>
+          )}
+        </div>
+      )}
+
+      {polylinePoints && (
+        <svg
+          className="absolute w-full h-full pointer-events-none"
+          style={{ top: 0, left: 0 }}
+        >
+          <polyline
+            points={polylinePoints}
+            fill="none"
+            stroke="#FF5733"
+            strokeWidth="1"
+            markerEnd="url(#circleMarker)"
+          />
+          <defs>
+            <marker
+              id="circleMarker"
+              markerWidth="10"
+              markerHeight="10"
+              refX="5"
+              refY="5"
+              orient="auto"
+            >
+              <circle cx="5" cy="5" r="3" fill="#FF5733" />
+            </marker>
+          </defs>
+        </svg>
+      )}
     </div>
   );
 };
