@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import projectImage from "../../assets/projectImages/project1.webp";
 
 const ProjectDetailsCard = ({ project }) => {
   const [showMore, setShowMore] = useState(false);
@@ -11,13 +10,13 @@ const ProjectDetailsCard = ({ project }) => {
   return (
     <div className="md:w-[65%] bg-white p-4 my-8 ml-4 rounded shadow">
     <div className="bg-white p-4">
-      <h3 className="text-xl font-semibold text-red-500">
+      <h3 className="text-xl font-semibold text-red-500 text-center pb-5 border-b-2">
         {project?.projectName}
       </h3>
-      <img src={projectImage} alt="project-Image"  className="my-6"/>
+    
 
       {/* Business Problem Section */}
-      <div>
+      <div className="mt-8">
         <h4 className="text-xl font-semibold text-red-500">Business Problem</h4>
         {project?.businessProblem?.map((problem, index) => (
           <p key={index} className="my-4 text-start">

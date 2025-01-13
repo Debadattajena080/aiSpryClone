@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import CarouselComponent from "./Carousel";
 
@@ -8,34 +8,15 @@ import mission from "../../assets/mission.png";
 import vision from "../../assets/vision.png";
 import digital from "../../assets/digital.webp";
 
-import { scrollToTop } from "../utility/ScrolToTop";
-
 import MultiCarousel from "./MulitCarousel";
 import AiTutorPhase from "./AiTutorPhase";
 import AiTutorCharter from "./AiTutorCharter";
 import AispryLearning from "./AispryLearning";
 import Awards from "./Awards";
 import DemoForm from "./DemoForm";
+import ScrollToTopButton from "../utility/ScrollToTopBtn";
 
 const Home = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleScroll = () => {
-    if (window.scrollY > 100) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <>
       <div className="relative container ">
@@ -193,19 +174,7 @@ const Home = () => {
       <section className="my-10">
         <Awards />
       </section>
-      <button
-        onClick={scrollToTop}
-        className={`fixed bottom-10 right-10 bg-blue-500 text-white p-3 rounded-full shadow-lg transition-all ${
-          isVisible
-            ? "opacity-100 transform translate-y-0"
-            : "opacity-0 transform translate-y-10"
-        }`}
-        style={{
-          transition: "opacity 0.5s ease, transform 0.5s ease",
-        }}
-      >
-        ↑
-      </button>
+      <ScrollToTopButton />
     </>
   );
 };
