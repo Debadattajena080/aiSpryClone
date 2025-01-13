@@ -21,20 +21,19 @@ const AiTutorCharter = () => {
     { label: "Collaborative Growth", position: { right: "-15%", top: "80%" } },
   ];
 
-  const [activeIndex, setActiveIndex] = useState(0); // Default to the first topic
+  const [activeIndex, setActiveIndex] = useState(0);
   const [showDetails, setShowDetails] = useState(true);
   const [polylinePoints, setPolylinePoints] = useState("");
   const topicRefs = useRef([]);
   const detailsBoxRef = useRef(null);
-  // const arrowOffset = 15; // Offset value to create space between the arrow and the topic's vertical center
-  const arrowHorizontalOffset = -90; // Horizontal offset for arrow end point
+  const arrowOffset = -40;
+  const arrowHorizontalOffset = -100;
 
   const handleClick = (index) => {
     if (index === activeIndex) {
-      // Toggle details and line visibility
       setShowDetails(!showDetails);
+      if (showDetails) setPolylinePoints("");
     } else {
-      // Change the selected topic
       setActiveIndex(index);
       setShowDetails(true);
     }
@@ -44,15 +43,13 @@ const AiTutorCharter = () => {
     if (
       activeIndex !== null &&
       topicRefs.current[activeIndex] &&
-      detailsBoxRef.current &&
-      showDetails
+      detailsBoxRef.current
     ) {
       const topicElement =
         topicRefs.current[activeIndex].getBoundingClientRect();
       const detailsBoxElement = detailsBoxRef.current.getBoundingClientRect();
 
       const boxCenterY = detailsBoxElement.top + detailsBoxElement.height / 2;
-
       const topicCenterY = topicElement.top + topicElement.height / 2;
 
       const boxStartX =
@@ -73,14 +70,14 @@ const AiTutorCharter = () => {
           (topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
             ? 50
             : -50)
-        },${topicCenterY}`,
+        },${topicCenterY + arrowOffset}`,
         `${
           topicElement.left +
           topicElement.width / 2 +
           (topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
             ? -arrowHorizontalOffset
             : arrowHorizontalOffset)
-        },${topicCenterY}`,
+        },${topicCenterY + arrowOffset}`,
       ].join(" ");
 
       setPolylinePoints(points);
@@ -113,7 +110,7 @@ const AiTutorCharter = () => {
               onClick={() => handleClick(index)}
               style={topic.position}
               className={`absolute h-12 flex flex-col items-center justify-center transition cursor-pointer text-center hover:text-red-500 ${
-                activeIndex === index ? "text-red-500" : "text-black"
+                activeIndex === index ? "text-red-500" : "text-gray-800"
               }`}
             >
               <span>{firstWord}</span>
