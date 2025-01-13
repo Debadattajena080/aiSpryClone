@@ -12,7 +12,7 @@ const FormComponent = ({ closeForm }) => {
     subject: "",
   });
 
-  const [loading, setLoading] = useState(false); // New loading state
+  const [loading, setLoading] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,8 +42,7 @@ const FormComponent = ({ closeForm }) => {
       return;
     }
 
-    setLoading(true); // Set loading to true when form is being submitted
-
+    setLoading(true); 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/saveUser`,
@@ -55,7 +54,7 @@ const FormComponent = ({ closeForm }) => {
     } catch (error) {
       toast.error(error?.response?.data?.error || "An error occurred");
     } finally {
-      setLoading(false); // Set loading to false after submission is complete
+      setLoading(false); 
     }
   };
 

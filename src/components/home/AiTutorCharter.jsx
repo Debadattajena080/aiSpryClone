@@ -51,40 +51,36 @@ const AiTutorCharter = () => {
         topicRefs.current[activeIndex].getBoundingClientRect();
       const detailsBoxElement = detailsBoxRef.current.getBoundingClientRect();
 
-      // Calculate the vertical center of the details box
       const boxCenterY = detailsBoxElement.top + detailsBoxElement.height / 2;
 
-      // Calculate the vertical center of the topic
       const topicCenterY = topicElement.top + topicElement.height / 2;
 
-      // Set the horizontal alignment based on the position of the topic (left or right)
       const boxStartX =
         topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
-          ? detailsBoxElement.right // Start from the right vertical center
-          : detailsBoxElement.left; // Start from the left vertical center
+          ? detailsBoxElement.right
+          : detailsBoxElement.left;
 
-      // Calculate the points for the polyline (start at box center, move horizontally, then to topic center)
       const points = [
-        `${boxStartX},${boxCenterY}`, // Start from the vertical center of the box
+        `${boxStartX},${boxCenterY}`,
         `${
           boxStartX +
           (topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
             ? 50
             : -50)
-        },${boxCenterY}`, // Move horizontally to adjust the alignment
+        },${boxCenterY}`,
         `${
           boxStartX +
           (topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
             ? 50
             : -50)
-        },${topicCenterY}`, // Offset vertically for space
+        },${topicCenterY}`,
         `${
           topicElement.left +
           topicElement.width / 2 +
           (topicElement.x > detailsBoxElement.x + detailsBoxElement.width / 2
             ? -arrowHorizontalOffset
             : arrowHorizontalOffset)
-        },${topicCenterY}`, // Add horizontal offset for space between the arrow and the topic
+        },${topicCenterY}`,
       ].join(" ");
 
       setPolylinePoints(points);
