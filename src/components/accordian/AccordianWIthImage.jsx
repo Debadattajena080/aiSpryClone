@@ -1,4 +1,4 @@
-// AccordionWithImage.jsx
+
 import React, { useState } from "react";
 import { accordianData } from "../utility/AccordianData";
 

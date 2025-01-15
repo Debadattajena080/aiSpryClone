@@ -27,13 +27,13 @@ const ProjectList = () => {
         if (response.data.length > 0) {
           const firstIndustryId = response.data[0]._id;
           setSelectedIndustry(firstIndustryId);
-          fetchProjects(firstIndustryId); // Fetch projects for the first industry
+          fetchProjects(firstIndustryId);
           setSearchParams({ industry: response.data[0].industryName });
         }
       } catch (error) {
         console.error("Error fetching industries:", error);
       } finally {
-        setIndustryLoading(false); // Stop industry loading
+        setIndustryLoading(false); 
       }
     };
 
@@ -41,7 +41,7 @@ const ProjectList = () => {
   }, []);
 
   const fetchProjects = async (industryId) => {
-    setProjectLoading(true); // Start project loading
+    setProjectLoading(true); 
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/api/projects/${industryId}`
