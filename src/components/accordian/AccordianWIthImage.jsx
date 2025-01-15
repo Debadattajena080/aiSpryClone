@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { accordianData } from "../utility/AccordianData";
 
@@ -13,11 +12,9 @@ const AccordionWithImage = () => {
 
   return (
     <div className="mt-4 flex flex-col lg:flex-row gap-6">
-      {/* Accordion Section */}
       <div className="w-full lg:w-1/2">
         {accordianData.map(({ header, content, image }, i) => (
           <div key={i} className="mb-4">
-            {/* Accordion Header */}
             <div
               className={`cursor-pointer p-4 rounded-md shadow-md transition ${
                 activeIndex === i
